@@ -70,7 +70,6 @@ tSpan = tI:dt:tEnd;
 p(1) = pI;
 [tode, pode] = ode45(@ebola, [tSpan], pI);
 plot(tode,pode,'m')
-legend('dt = 10','dt = 5','dt = 1', 'Runge-Kutta', 'ODE45')
 formatSpec = 'For a step of %.2f, half of population infected at %.2f hours with ratio of %.4f for ODE45\n';
 fprintf(formatSpec, dt, tode(44), pode(44))
 
