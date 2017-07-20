@@ -13,9 +13,10 @@ x2'(t) = (b/m)x2(t) - (k/m)x1 + f(t)
 
 %% part b
 type d2ydt2.m 
-y = d2ydt2(0)
-y = d2ydt2(50)
-y = d2ydt2(-20)
+b = 8
+y = d2ydt2(0, b)
+y = d2ydt2(50, b)
+y = d2ydt2(-20, b)
 %{
 changing f(t) shifts equilibirum poin in that direction
 increaseing f(t) shifts right, decreasing f(t) shifts left
@@ -34,6 +35,7 @@ roots are complex b/c determinant (b^2 - 4ac) is less than 0
 checkRootsAux = (Aux(2))^2 - 4*(Aux(1))*(Aux(3))
 
 %% part d
+figure
 tI = 0;
 tEnd = 2;
 tSpan = [tI tEnd];
@@ -72,4 +74,51 @@ plot(points(2,:), 'r*' )
 legend('dY(t) vs. Y(t)','initial','equilibirum point')
 
 %% part e
+%{
+b^2 - 4ac = 0
+b^2 = 4(1)(200)
+%}
+b = sqrt(4*200);
+Aux = [1 b 200];
+rootsAux = roots(Aux)
 
+figure
+tI = 0;
+tEnd = 2;
+tSpan = [tI tEnd];
+yI = 63;
+dyI = 0;
+ySpan = [yI; dyI];
+type dyode.m
+[tode, yode] = ode45(@dyodeNew, tSpan, ySpan);
+subplot(2,2,1)
+plot(tode,yode(:,1))
+grid on
+hold on
+xlabel('Interval Range (t)')
+ylabel('Y(t)')
+title('New Y(t) vs. t')
+
+subplot(2,2,2)
+plot(tode,yode(:,2))
+grid on
+hold on
+xlabel('Interval Range (t)')
+ylabel('dY(t)')
+title('New dY(t) vs. t')
+
+subplot(2,2,3)
+plot(yode(:,1),yode(:,2))
+grid on
+hold on
+xlabel('Y(t)')
+ylabel('dY(t)')
+title('New dY(t) vs. Y(t)')
+
+points = [yode(1,1) yode(1,2); yode(145,1) yode(145,2)];
+plot(points(1,:), 'g*' )
+plot(points(2,:), 'r*' )
+legend('New dY(t) vs. Y(t)','initial','equilibirum point')
+%{
+Time is faster to get to get to equilibirum with the new B value
+%}
