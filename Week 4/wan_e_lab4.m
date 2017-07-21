@@ -69,8 +69,8 @@ ylabel('dY(t)')
 title('dY(t) vs. Y(t)')
 
 points = [yode(1,1) yode(1,2); yode(164,1) yode(164,2)];
-plot(points(1,:), 'g*' )
-plot(points(2,:), 'r*' )
+plot(63,0, 'g*' )
+plot(0, d2ydt2(0, b), 'r*' )
 legend('dY(t) vs. Y(t)','initial','equilibirum point')
 
 %% part e
@@ -116,8 +116,8 @@ ylabel('dY(t)')
 title('New dY(t) vs. Y(t)')
 
 points = [yode(1,1) yode(1,2); yode(145,1) yode(145,2)];
-plot(points(1,:), 'g*' )
-plot(points(2,:), 'r*' )
+plot(63, 0, 'g*' )
+plot(0, d2ydt2(0, b), 'r*' )
 legend('New dY(t) vs. Y(t)','initial','equilibirum point')
 %{
 Time is faster to get to get to equilibirum with the new B value

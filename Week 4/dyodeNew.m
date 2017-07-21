@@ -1,4 +1,4 @@
-function [ yode ] = dyode( tSpan, ySpan )
+function [ yode ] = dyodeNew( tSpan, ySpan )
 b = sqrt(4*200);
 k = 200;
 m = 1;
