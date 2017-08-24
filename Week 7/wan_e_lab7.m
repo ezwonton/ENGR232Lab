@@ -69,6 +69,11 @@ legend('x2 vs x1', 'init condition', 'equil point')
 %% Part D
 y = matlabFunction(yt) % matlabFunction of y(t) ilaplace of Y(s)
 dy = matlabFunction(diff(yt)) % matlabFunction of dy(t)
+% If symbolic toolbox is not installed, use my_matlabFunction
+%{
+y = my_matlabFunction(yt) % matlabFunction of y(t) ilaplace of Y(s)
+dy = my_matlabFunction(diff(yt)) % matlabFunction of dy(t)
+%}
 
 %% Part E
 figure
