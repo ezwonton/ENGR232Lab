@@ -3,6 +3,7 @@ clear all, close all, clc, format compact
 %{
 y'' - 3y' + 19y = u(t) ; y(0) = 3, y'(0) = 0
 
+solving for [x1'; x2']:
 x1 = y, x2 = y'
 x1' = 0 * x1 + 1 * x2
 1 * x2' + -3 * x2 + 19 * x1 = u(t)
@@ -26,6 +27,7 @@ x2ode = yode(:,2); % setting x2 (dy(t))
 
 %% Part B - Laplace & iLaplace
 %{
+Solving for Y(s) for laplace transformation:
 y'' - 3y' + 19y = u(t) ; y(0) = 3, y'(0) = 0
 y'' - 3y' + 19y = exp(-t) * sin(t)
 a[ s^2Y(s) - sy(0) - y'(0) ] + b[ sY(s) - y(0) ] + c[ Y(s) ] = U(s)
@@ -45,6 +47,7 @@ yprime = diff(yt,1); % deriving y'
 dyFunc = matlabFunction(yprime) % convert y' from symbolic to function
 
 %{
+dsolve methodology if needed:
 syms y
 % y'' - 3y' + 19y = u(t) ; y(0) = 3, y'(0) = 0
 y = dsolve('1*D2y + -3*Dy + 19*y = exp(-5*t) * sin(t), y(0) == 3, Dy(0) == 0'); % solve 2nd ODE

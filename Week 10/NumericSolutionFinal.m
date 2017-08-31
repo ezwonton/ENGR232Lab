@@ -1,4 +1,4 @@
-function [xPrimes] = NumericSolution(tSpan, IC)
+function [xPrimes] = NumericSolutionFinal(tSpan, IC)
 a = 1;
 b = -3;
 c = 19;
