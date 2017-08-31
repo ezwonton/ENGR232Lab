@@ -1,0 +1,87 @@
+%% Eric Wan - ezw23@drexel.edu - Final Practice
+clear all
+close all
+clc
+
+%{
+10y'' + by' + 250y = u(t) ; y(0) = 0, y'(0) = 0
+Laplace Transformations:
+a[ s^2Y(s) - sy(0) - y'(0) ] + b[ sY(s) - y(0) ] + c[ Y(s) ] = U(s)
+10[ s^2Y(s) - sy(0) - y'(0) ] + b[ sY(s) - y(0) ] + 250[ Y(s) ] = U(s)
+10[ s^2Y(s) - s*0 - 0 ] + b[ sY(s) - 0 ] + 250[ Y(s) ] = U(s)
+[10s^2Y(s)] + [bsY(s)] + [250Y(s)] = U(s)
+Y(s)[10s^2 + bs + 250] = U(s)
+Y(s)= U(s)/[10s^2 + bs + 250] 
+
+x'(t) = Ax(t) + Bf(t)
+x1 = y, x2 = y'
+x1' = 0 * x1 + 1 * x2
+10 * x2' + b * x2 + 250 * x1 = u(t)
+10 * x2' = u(t) - b * x2 - 250 * x1
+x2' = u(t) - 250/10 * x1 - b/10 * x2
+[x1'; x2'] = [0 1; -250 -b/10] * [x1; x2] + [0;1] * u(t)
+%}
+%% ODE45
+a = 10;
+c = 250;
+b = sqrt(4*a*c)
+A = [0 1; -c/a -b/a];
+B = [0; 1/a];
+aux = [10 b 250]; % Coefficient matrix
+r = roots(aux) % finding roots
+IC = [0; 0]
+EP = A^-1 * B
+tSpan = 0:0.01:10; % span of T
+
+[tode, yode] = ode45(@NumericSolution, tSpan, IC); % ode45
+x1 = yode(:,1); % setting x1
+x2 = yode(:,2); % setting x2
+
+figure(1) 
+% plotting x = y(t) vs t
+plot(tode, x1,'r.-');
+title('y(t) vs t');
+xlabel('t');
+ylabel('y(t)');
+grid on;
+hold on;
+legend('x2 vs x1', 'init condition', 'equil point');
+%% DSOLVE
+syms y
+bhalf = b/2
+% 10y'' + by' + 250y = u(t) ; y(0) = 0, y'(0) = 0
+y = dsolve('10*D2y + 50*Dy + 250*y = 1, y(0) == 0, Dy(0) == 0'); % solve 2nd ODE
+yprime = diff(y,1); % y'
+yFunc = matlabFunction(y); % convert y from symbolic to function
+dyFunc = matlabFunction(yprime); % convert y' from symbolic to function
+
+% plotting x = y(t) vs t
+plot(tSpan, yFunc(tSpan),'b.-'); % y vs t
+
+
+%% LAPLACE & ILAPLACE
+
+IC = [1; 1]; % Init Conditions
+A = [0 1; -2 -3/2]; % setting matrix coefficients
+B = [0; 1/2]; % setting x' = 0
+ep = A^-1 * B % solving for equilibrium points
+
+syms t s
+u = exp(t); % u(t)
+U = (1/s - 2*s - 5)/(2*s^2 + 3*s + 4); % Y(S)
+Us = laplace(u, t, s) % U(s)
+yt = ilaplace(U, s, t) % y(t)
+
+
+
+function [xPrimes] = NumericSolution(tSpan, IC)
+a = 10;
+c = 250;
+b = sqrt(4*a*c);
+ut = exp(tSpan);
+A = [0 1; -c/a -b/a];
+B = [0; 1/a];
+xPrimes = A * IC + B * ut;
+end
+
+
